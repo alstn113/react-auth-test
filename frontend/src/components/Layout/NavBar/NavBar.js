@@ -27,6 +27,14 @@ export default function NavBar() {
       path: "/",
     },
     {
+      text: "Login",
+      path: "/login",
+    },
+    {
+      text: "Register",
+      path: "/register",
+    },
+    {
       text: "Counter",
       path: "/counter",
     },
@@ -52,7 +60,7 @@ export default function NavBar() {
     <>
       <Grid container spacing={2} justifyContent="center" alignItems="center">
         <Grid item>
-          <Typography variant="h1">HOME PAGE</Typography>
+          <Typography variant="h1">REACT AUTH TEST</Typography>
         </Grid>
         <Grid item>
           <Button variant="contained" color="primary" onClick={() => toggleDrawer()}>

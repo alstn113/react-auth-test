@@ -1,9 +1,10 @@
 import useStyles from "./styles";
-import { useQuery } from "react-query";
-import * as api from "../../lib/api";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import { Container } from "@material-ui/core";
+import Container from "@material-ui/core/Container";
+
+import { useQuery } from "react-query";
+import * as api from "../../lib/api";
 
 const Query = () => {
   const classes = useStyles();
