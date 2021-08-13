@@ -1,7 +1,10 @@
 import React, { useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { decrease, increase, increaseByValue } from "../modules/counter";
+import { decrease, increase, increaseByValue } from "../../modules/counter";
+import Button from "@material-ui/core/Button";
+
+import useStyles from "./styles";
 
 const Counter = () => {
   const dispatch = useDispatch();
@@ -16,7 +19,7 @@ const Counter = () => {
       <div>
         <button onClick={onIncrease}>+1</button>
         <button onClick={onDecrease}>-1</button>
-        <button onClick={onIncreaseByValue}>수치만큼 증가</button>
+        <Button onClick={onIncreaseByValue}>수치만큼 증가</Button>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import "./config.js";
 import express from "express";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
+import cors from "cors";
 
 import apiRouter from "./routes/index.js";
 import jwtMiddleware from "./lib/jwtMiddleware.js";
@@ -15,6 +16,7 @@ app.use(morgan("dev"));
 app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(cors());
 
 app.use(jwtMiddleware);
 
