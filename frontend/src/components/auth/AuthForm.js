@@ -13,7 +13,7 @@ const textMap = {
   register: "Sign Up",
 };
 
-const AuthForm = ({ type, form, onChange, onSubmit }) => {
+const AuthForm = ({ type, form, onChange, onSubmit, isLoading, error }) => {
   const classes = useStyles();
   const text = textMap[type];
 
@@ -66,8 +66,9 @@ const AuthForm = ({ type, form, onChange, onSubmit }) => {
             />
           )}
           <Button className={classes.submit} type="submit" fullWidth variant="contained" color="primary">
-            Sign In
+            {isLoading ? "Loading..." : text}
           </Button>
+          {error}
           <Grid container justifyContent="center">
             <Grid item>
               <Typography>{type === "login" ? <Link to="/register">Sign Up?</Link> : <Link to="/login">Sign In?</Link>}</Typography>

@@ -11,7 +11,6 @@ const initialState = {
     password: "",
   },
   auth: null,
-  authError: null,
 };
 
 export const authSlice = createSlice({
@@ -24,9 +23,15 @@ export const authSlice = createSlice({
     initializeForm: () => {
       return initialState;
     },
+    login: (state, { payload: { auth } }) => {
+      state.auth = auth;
+    },
+    register: (state, { payload: { auth } }) => {
+      state.auth = auth;
+    },
   },
 });
 
-export const { changeField, initializeForm } = authSlice.actions;
+export const { changeField, initializeForm, login, register } = authSlice.actions;
 
 export default authSlice.reducer;
