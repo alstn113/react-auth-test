@@ -27,10 +27,6 @@ export default function NavBar() {
       path: "/",
     },
     {
-      text: "Login",
-      path: "/login",
-    },
-    {
       text: "Register",
       path: "/register",
     },
@@ -58,13 +54,18 @@ export default function NavBar() {
 
   return (
     <>
-      <Grid container spacing={2} justifyContent="center" alignItems="center">
+      <Grid container justifyContent="space-between" alignItems="center">
+        <Grid item>
+          <Button variant="contained" color="primary" onClick={() => toggleDrawer()}>
+            <DehazeSharpIcon />
+          </Button>
+        </Grid>
         <Grid item>
           <Typography variant="h1">REACT AUTH TEST</Typography>
         </Grid>
         <Grid item>
-          <Button variant="contained" color="primary" onClick={() => toggleDrawer()}>
-            <DehazeSharpIcon />
+          <Button variant="contained" color="primary" onClick={() => history.push("/login")}>
+            Login
           </Button>
         </Grid>
       </Grid>

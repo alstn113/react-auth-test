@@ -7,7 +7,7 @@ const Home = () => {
 
   return (
     <>
-      <Typography variant="h2" color="textSecondary" align="center">
+      <Typography className={classes.page} variant="h2" color="textSecondary" align="center">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, voluptatem? Amet voluptatum quibusdam eius, debitis obcaecati inventore
         commodi natus libero corporis laborum labore, ea quas ex, non est sed. Ad.
       </Typography>

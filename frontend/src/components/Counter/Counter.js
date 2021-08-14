@@ -2,6 +2,8 @@ import useStyles from "./styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import React, { useCallback } from "react";
 import { useSelector } from "react-redux";
@@ -37,6 +39,14 @@ const Counter = () => {
           <Button className={classes.btn} variant="contained" color="secondary" onClick={() => onIncreaseByValue(+5)}>
             +5
           </Button>
+        </Grid>
+      </Grid>
+      <Grid container justifyContent="center" alignItems="center">
+        <Grid item>
+          <Button className={classes.btn} variant="contained" color="secondary" onClick={() => toast.success("Wow so easy!")}>
+            Toast Button
+          </Button>
+          <ToastContainer />
         </Grid>
       </Grid>
     </>
