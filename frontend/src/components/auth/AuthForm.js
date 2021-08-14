@@ -13,7 +13,7 @@ const textMap = {
   register: "Sign Up",
 };
 
-const AuthForm = ({ type }) => {
+const AuthForm = ({ type, form, onChange, onSubmit }) => {
   const classes = useStyles();
   const text = textMap[type];
 
@@ -23,7 +23,7 @@ const AuthForm = ({ type }) => {
         <Typography className={classes.title} variant="h3" align="center">
           - {text} -
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={onSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -34,6 +34,8 @@ const AuthForm = ({ type }) => {
             name="username"
             autoComplete="email"
             autoFocus
+            onChange={onChange}
+            value={form.username}
           />
           <TextField
             variant="outlined"
@@ -44,7 +46,9 @@ const AuthForm = ({ type }) => {
             label="Password"
             type="password"
             id="password"
-            autoComplete="current-password"
+            autoComplete="new-password"
+            onChange={onChange}
+            value={form.password}
           />
           {type === "register" && (
             <TextField
@@ -56,7 +60,9 @@ const AuthForm = ({ type }) => {
               label="passwordConfirm"
               type="password"
               id="passwordConfirm"
-              autoComplete="current-password"
+              autoComplete="new-password"
+              onChange={onChange}
+              value={form.passwordConfirm}
             />
           )}
           <Button className={classes.submit} type="submit" fullWidth variant="contained" color="primary">

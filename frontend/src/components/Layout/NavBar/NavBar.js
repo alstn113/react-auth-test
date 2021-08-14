@@ -44,7 +44,12 @@ export default function NavBar() {
     <div className={classes.list} onClick={() => toggleDrawer()}>
       <List>
         {menuItems.map((item) => (
-          <ListItem button key={item.text} onClick={() => history.push(item.path)} className={location.pathname == item.path ? classes.active : null}>
+          <ListItem
+            button
+            key={item.text}
+            onClick={() => history.push(item.path)}
+            className={location.pathname === item.path ? classes.active : null}
+          >
             <ListItemText>{item.text}</ListItemText>
           </ListItem>
         ))}
