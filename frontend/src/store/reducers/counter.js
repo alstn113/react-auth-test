@@ -12,6 +12,7 @@ export const counterSlice = createSlice({
       state.number += value;
     },
   },
+  extraReducers: (builder) => {},
 });
 
 export const { increaseByValue } = counterSlice.actions;

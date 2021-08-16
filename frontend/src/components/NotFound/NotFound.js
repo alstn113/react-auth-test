@@ -1,9 +1,6 @@
-import useStyles from "./styles";
 import { Link } from "react-router-dom";
 
 const NotFound = () => {
-  const classes = useStyles();
-
   return (
     <div className="not-found">
       <h2>Sorry</h2>

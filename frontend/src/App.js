@@ -3,7 +3,7 @@ import { createTheme, ThemeProvider } from "@material-ui/core";
 import Layout from "./components/Layout/Layout";
 import Home from "./components/Home/Home";
 import Counter from "./components/Counter/Counter";
-import Query from "./components/Query/Query";
+import Sample from "./components/Sample/Sample";
 import NotFound from "./components/NotFound/NotFound";
 import Login from "./components/auth/LoginForm/LoginForm";
 import Register from "./components/auth/RegisterForm/RegisterForm";
@@ -22,7 +22,7 @@ const App = () => {
           <Switch>
             <Route exact component={Home} path="/" />
             <Route exact component={Counter} path="/counter" />
-            <Route exact component={Query} path="/query" />
+            <Route exact component={Sample} path="/sample" />
             <Route exact component={Login} path="/login" />
             <Route exact component={Register} path="/register" />
             <Route exact component={NotFound} path="*" />

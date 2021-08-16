@@ -35,8 +35,8 @@ export default function NavBar() {
       path: "/counter",
     },
     {
-      text: "Query",
-      path: "/Query",
+      text: "Sample",
+      path: "/Sample",
     },
   ];
 

@@ -1,14 +1,14 @@
+import React, { useCallback } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { increaseByValue } from "../../store/reducers/counter";
+
 import useStyles from "./styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-import React, { useCallback } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { increaseByValue } from "../../modules/counter";
 
 const Counter = () => {
   const dispatch = useDispatch();

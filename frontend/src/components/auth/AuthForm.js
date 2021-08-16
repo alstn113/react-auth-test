@@ -1,3 +1,7 @@
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Link } from "react-router-dom";
+
 import useStyles from "./styles";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -6,16 +10,21 @@ import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
 
-import { Link } from "react-router-dom";
-
 const textMap = {
   login: "Sign In",
   register: "Sign Up",
 };
 
-const AuthForm = ({ type, form, onChange, onSubmit, isLoading, error }) => {
+const AuthForm = ({ type, schema, onSubmit, loading, error }) => {
   const classes = useStyles();
   const text = textMap[type];
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   return (
     <Container maxWidth="xs">
@@ -23,19 +32,19 @@ const AuthForm = ({ type, form, onChange, onSubmit, isLoading, error }) => {
         <Typography className={classes.title} variant="h3" align="center">
           - {text} -
         </Typography>
-        <form className={classes.form} noValidate onSubmit={onSubmit}>
+        <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="username"
-            label="Username"
             name="username"
-            autoComplete="email"
+            label="Username"
+            type="text"
+            id="username"
             autoFocus
-            onChange={onChange}
-            value={form.username}
+            {...register("username")}
+            error={errors.username ? true : false}
           />
           <TextField
             variant="outlined"
@@ -47,8 +56,8 @@ const AuthForm = ({ type, form, onChange, onSubmit, isLoading, error }) => {
             type="password"
             id="password"
             autoComplete="new-password"
-            onChange={onChange}
-            value={form.password}
+            {...register("password")}
+            error={errors.password ? true : false}
           />
           {type === "register" && (
             <TextField
@@ -61,12 +70,12 @@ const AuthForm = ({ type, form, onChange, onSubmit, isLoading, error }) => {
               type="password"
               id="passwordConfirm"
               autoComplete="new-password"
-              onChange={onChange}
-              value={form.passwordConfirm}
+              {...register("passwordConfirm")}
+              error={errors.passwordConfirm ? true : false}
             />
           )}
           <Button className={classes.submit} type="submit" fullWidth variant="contained" color="primary">
-            {isLoading ? "Loading..." : text}
+            {loading ? "Loading..." : text}
           </Button>
           {error}
           <Grid container justifyContent="center">
