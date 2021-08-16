@@ -1,51 +1,33 @@
-// import { useEffect } from "react";
-// import { useSelector, useDispatch } from "react-redux";
-// import { useHistory } from "react-router-dom";
-// import { changeField, initializeForm } from "../../../store/reducers/auth";
-// import AuthForm from "../AuthForm";
-// import * as yup from "yup";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import AuthForm from "../AuthForm";
+import * as yup from "yup";
+import { register } from "../../../store/actions/auth";
 
-// const RegisterForm = () => {
-//   const dispatch = useDispatch();
-//   const history = useHistory();
+const RegisterForm = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-//   const { form, auth } = useSelector(({ auth }) => ({
-//     form: auth.register,
-//     auth: auth.auth,
-//   }));
+  const { registerLoading, registerError, auth } = useSelector(({ auth }) => ({
+    registerLoading: auth.registerLoading,
+    registerError: auth.registerError,
+    auth: auth.auth,
+  }));
 
-//   const registerSchema = yup.object().shape({
-//     username: yup.string().min(4).max(15).required(),
-//     password: yup.string().min(4).max(15).required(),
-//     passwordConfirm: yup.string().oneOf([yup.ref("password"), null]),
-//   });
+  const registerSchema = yup.object().shape({
+    username: yup.string().required("필수 항목입니다.").min(4, "4자리 이상으로 입력해주세요.").max(15, "15자리 이하로 입력해주세요"),
+    password: yup.string().required("필수 항목입니다").min(4, "4자리 이상으로 입력해주세요.").max(15, "15자리 이하로 입력해주세요"),
+    passwordConfirm: yup
+      .string()
+      .required("필수 항목입니다")
+      .oneOf([yup.ref("password"), null], "비밀번호가 일치하지 않습니다"),
+  });
 
-//   const onChange = (e) => {
-//     const { value, name } = e.target;
-//     dispatch(
-//       changeField({
-//         form: "register",
-//         key: name,
-//         value,
-//       })
-//     );
-//   };
+  const onSubmit = async (e) => {
+    const { username, password } = e;
+    dispatch(register({ username, password }));
+  };
 
-//   const onSubmit = async (e) => {
-//     try {
-//       return history.push("/");
-//     } catch (error) {
-//       if (error.response.status) {
-//         dispatch(changeField({ form: "register", key: "username", value: "" }));
-//         return console.error("이미 존재하는 이메일입니다");
-//       }
-//       return console.error("회원가입에 실패했습니다");
-//     }
-//   };
-
-//   useEffect(() => {
-//     dispatch(initializeForm());
-//   }, [dispatch]);
-//   return <AuthForm type="register" form={form} schema={registerSchema} onChange={onChange} onSubmit={onSubmit} />;
-// };
-// export default RegisterForm;
+  return <AuthForm type="register" schema={registerSchema} onSubmit={onSubmit} loading={registerLoading} error={registerError} />;
+};
+export default RegisterForm;

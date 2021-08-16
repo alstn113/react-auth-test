@@ -12,7 +12,6 @@ export default makeStyles((theme) => ({
     backgroundColor: "white",
   },
   submit: {
-    marginTop: theme.spacing(3),
     marginBottom: theme.spacing(1),
     height: 60,
   },

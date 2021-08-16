@@ -2,11 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { login, register } from "../actions/auth";
 
 const initialState = {
-  loginLoaindg: false,
+  loginLoading: false,
   loginDone: false,
   loginError: null,
 
-  registerLoaindg: false,
+  registerLoading: false,
   registerDone: false,
   registerError: null,
 
@@ -21,38 +21,40 @@ export const authSlice = createSlice({
     builder
       // LOGIN
       .addCase(login.pending, (state) => {
-        if (state.loginLoaindg === false) {
-          state.loginLoaindg = true;
+        if (state.loginLoading === false) {
+          state.loginError = false;
+          state.loginLoading = true;
         }
       })
-      .addCase(login.fulfilled, (state, action) => {
-        if (state.loginLoaindg === true) {
-          state.loginLoaindg = false;
-          state.auth = action.payload.auth;
+      .addCase(login.fulfilled, (state, { payload: auth }) => {
+        if (state.loginLoading === true) {
+          state.loginLoading = false;
+          state.auth = auth;
         }
       })
-      .addCase(login.rejected, (state, action) => {
-        if (state.loginLoaindg === true) {
-          state.loginLoaindg = false;
-          state.loginError = action.error;
+      .addCase(login.rejected, (state, { payload: error }) => {
+        if (state.loginLoading === true) {
+          state.loginLoading = false;
+          state.loginError = error.error;
         }
       })
       // REGISTER
       .addCase(register.pending, (state) => {
-        if (state.registerLoaindg === false) {
-          state.registerLoaindg = true;
+        if (state.registerLoading === false) {
+          state.registerError = false;
+          state.registerLoading = true;
         }
       })
-      .addCase(register.fulfilled, (state, action) => {
-        if (state.registerLoaindg === true) {
-          state.registerLoaindg = false;
-          state.auth = action.payload.auth;
+      .addCase(register.fulfilled, (state, { paylod: auth }) => {
+        if (state.registerLoading === true) {
+          state.registerLoading = false;
+          state.auth = auth;
         }
       })
-      .addCase(register.rejected, (state, action) => {
-        if (state.registerLoaindg === true) {
-          state.registerLoaindg = false;
-          state.registerError = action.error;
+      .addCase(register.rejected, (state, { payload: error }) => {
+        if (state.registerLoading === true) {
+          state.registerLoading = false;
+          state.registerError = error.error;
         }
       });
   },
