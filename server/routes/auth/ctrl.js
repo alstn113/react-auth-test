@@ -53,11 +53,12 @@ export const check = async (req, res, next) => {
   const { user } = req.app.locals;
   console.log(user);
   if (!user) {
-    return res.status(401).json({ error: "Unauthorized" });
+    return res.status(401).json({ error: "권한이 없습니다." });
   }
   return res.json(user);
 };
 
 export const logout = async (req, res, next) => {
+  req.app.locals.user = null;
   return res.status(204).clearCookie("access_token").json({ success: true });
 };
