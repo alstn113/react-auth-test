@@ -1,22 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login, register } from "../actions/auth";
+import { login, register, check, logout } from "../actions/auth";
 
 const initialState = {
   loginLoading: false,
-  loginDone: false,
   loginError: null,
 
   registerLoading: false,
-  registerDone: false,
   registerError: null,
 
-  auth: null,
+  checkLoading: false,
+  checkError: null,
+
+  logoutLoading: false,
+  logoutError: null,
+
+  user: null,
 };
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    tempSetUser: (state, { payload: user }) => {
+      state.user = user;
+    },
+  },
   extraReducers: (builder) => {
     builder
       // LOGIN
@@ -26,10 +34,10 @@ export const authSlice = createSlice({
           state.loginLoading = true;
         }
       })
-      .addCase(login.fulfilled, (state, { payload: auth }) => {
+      .addCase(login.fulfilled, (state, action) => {
         if (state.loginLoading === true) {
           state.loginLoading = false;
-          state.auth = auth;
+          state.user = action.payload;
         }
       })
       .addCase(login.rejected, (state, { payload: error }) => {
@@ -45,19 +53,60 @@ export const authSlice = createSlice({
           state.registerLoading = true;
         }
       })
-      .addCase(register.fulfilled, (state, { paylod: auth }) => {
+      .addCase(register.fulfilled, (state, action) => {
         if (state.registerLoading === true) {
           state.registerLoading = false;
-          state.auth = auth;
+          state.user = action.payload;
         }
       })
       .addCase(register.rejected, (state, { payload: error }) => {
         if (state.registerLoading === true) {
           state.registerLoading = false;
+          state.user = null;
           state.registerError = error.error;
+        }
+      })
+      // CHECK
+      .addCase(check.pending, (state) => {
+        if (state.checkLoading === false) {
+          state.checkError = false;
+          state.checkLoading = true;
+        }
+      })
+      .addCase(check.fulfilled, (state, { payload: user }) => {
+        if (state.checkLoading === true) {
+          state.checkLoading = false;
+          state.user = user;
+        }
+      })
+      .addCase(check.rejected, (state, { payload: error }) => {
+        if (state.checkLoading === true) {
+          state.checkLoading = false;
+          state.checkError = error.error;
+        }
+      })
+      // LOGOUT
+      .addCase(logout.pending, (state) => {
+        if (state.logoutLoading === false) {
+          state.logoutError = false;
+          state.logoutLoading = true;
+        }
+      })
+      .addCase(logout.fulfilled, (state) => {
+        if (state.logoutLoading === true) {
+          state.logoutLoading = false;
+          state.user = null;
+        }
+      })
+      .addCase(logout.rejected, (state, { payload: error }) => {
+        if (state.logoutLoading === true) {
+          state.logoutLoading = false;
+          state.logoutError = error.error;
         }
       });
   },
 });
+
+export const { tempSetUser } = authSlice.actions;
 
 export default authSlice.reducer;

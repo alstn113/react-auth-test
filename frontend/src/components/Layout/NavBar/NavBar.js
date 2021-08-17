@@ -8,18 +8,44 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import DehazeSharpIcon from "@material-ui/icons/DehazeSharp";
 
-import { useState } from "react";
-import { useHistory, useLocation } from "react-router";
+import { useEffect, useState } from "react";
+import { useLocation, useHistory } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../../store/actions/auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function NavBar() {
   const classes = useStyles();
-  const history = useHistory();
   const location = useLocation();
+  const history = useHistory();
+  const dispatch = useDispatch();
   const [state, setState] = useState(false);
+
+  const { user, logoutLoading, logoutError } = useSelector(({ auth }) => ({
+    user: auth.user,
+    logoutLoading: auth.logoutLoading,
+    logoutError: auth.logoutError,
+  }));
+
+  const onLogout = () => {
+    dispatch(logout())
+      .unwrap()
+      .then(() => {
+        localStorage.removeItem("user");
+        window.location.reload();
+      });
+  };
 
   const toggleDrawer = () => {
     setState(!state);
   };
+
+  useEffect(() => {
+    if (logoutError) {
+      toast.error(logoutError);
+    }
+  }, [logoutError]);
 
   const menuItems = [
     {
@@ -59,6 +85,7 @@ export default function NavBar() {
 
   return (
     <>
+      <ToastContainer closeOnClick />
       <Grid container justifyContent="space-between" alignItems="center">
         <Grid item>
           <Button variant="contained" color="primary" onClick={() => toggleDrawer()}>
@@ -69,9 +96,15 @@ export default function NavBar() {
           <Typography variant="h1">REACT AUTH TEST</Typography>
         </Grid>
         <Grid item>
-          <Button variant="contained" color="primary" onClick={() => history.push("/login")}>
-            Login
-          </Button>
+          {!user ? (
+            <Button variant="contained" color="primary" onClick={() => history.push("/login")}>
+              Login
+            </Button>
+          ) : (
+            <Button variant="contained" color="primary" onClick={() => onLogout()}>
+              {logoutLoading ? "Loading..." : "Logout"}
+            </Button>
+          )}
         </Grid>
       </Grid>
       <Drawer anchor="left" open={state} onClose={() => toggleDrawer()}>

@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { useEffect } from "react";
 import AuthForm from "../AuthForm";
 import * as yup from "yup";
 import { register } from "../../../store/actions/auth";
@@ -8,10 +9,10 @@ const RegisterForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { registerLoading, registerError, auth } = useSelector(({ auth }) => ({
+  const { registerLoading, registerError, user } = useSelector(({ auth }) => ({
     registerLoading: auth.registerLoading,
     registerError: auth.registerError,
-    auth: auth.auth,
+    user: auth.user,
   }));
 
   const registerSchema = yup.object().shape({
@@ -27,6 +28,17 @@ const RegisterForm = () => {
     const { username, password } = e;
     dispatch(register({ username, password }));
   };
+
+  useEffect(() => {
+    if (user) {
+      history.push("/");
+      try {
+        localStorage.setItem("user", JSON.stringify(user));
+      } catch (e) {
+        console.log("localStorage is not working");
+      }
+    }
+  }, [history, user]);
 
   return <AuthForm type="register" schema={registerSchema} onSubmit={onSubmit} loading={registerLoading} error={registerError} />;
 };

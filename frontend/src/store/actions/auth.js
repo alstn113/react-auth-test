@@ -20,11 +20,15 @@ export const register = createAsyncThunk("auth/register", async (data, { rejectW
 });
 
 export const check = createAsyncThunk("auth/check", async () => {
-  const response = await axios.post("/api/auth/logout");
+  const response = await axios.get("/api/auth/check");
   return response.data;
 });
 
-export const logout = createAsyncThunk("auth/logout", async () => {
-  const response = await axios.post("/api/auth/logout");
-  return response.data;
+export const logout = createAsyncThunk("auth/logout", async (data, { rejectWithValue }) => {
+  try {
+    const response = await axios.post("/api/auth/logout");
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
 });

@@ -30,14 +30,12 @@ const AuthForm = ({ type, schema, onSubmit, loading, error }) => {
   });
 
   useEffect(() => {
-    if (error) {
-      toast.error(error);
-    }
+    toast.error(error);
   }, [error]);
 
   return (
     <Container maxWidth="xs">
-      <ToastContainer />
+      <ToastContainer closeOnClick />
       <Paper elevation={8}>
         <Typography className={classes.title} variant="h3" align="center">
           - {text} -
