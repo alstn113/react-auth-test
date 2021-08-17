@@ -51,6 +51,7 @@ export const login = async (req, res, next) => {
 
 export const check = async (req, res, next) => {
   const { user } = req.app.locals;
+  console.log(user);
   if (!user) {
     return res.status(401).json({ error: "Unauthorized" });
   }
